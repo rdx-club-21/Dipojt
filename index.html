@@ -345,18 +345,18 @@
         </div>
 
         <div class="amount-grid">
-            <div class="amount-btn" onclick="setAmount(100)">৳ 100</div>
-            <div class="amount-btn" onclick="setAmount(200)">200</div>
-            <div class="amount-btn" onclick="setAmount(500)">৳ 500</div>
-            <div class="amount-btn" onclick="setAmount(5000)"> 5K</div>
-            <div class="amount-btn" onclick="setAmount(10000)">৳ 10K</div>
+            <div class="amount-btn" onclick="setAmount(800)">৳ 800</div>
+            <div class="amount-btn" onclick="setAmount(2000)">2000</div>
+            <div class="amount-btn" onclick="setAmount(5000)">৳ 5000</div>
+            <div class="amount-btn" onclick="setAmount(10000)"> 10K</div>
+            <div class="amount-btn" onclick="setAmount(20000)">৳ 20K</div>
             <div class="amount-btn" onclick="setAmount(50000)">৳ 50K</div>
         </div>
 
         <div class="input-wrapper">
             <span class="currency-symbol">৳</span>
-            <input type="number" class="custom-input" id="amountInput" placeholder="100.00 - ৳25,000.00" oninput="validateInput()">
-            <span class="clear-icon" onclick="clearAmount()"></span>
+            <input type="number" class="custom-input" id="amountInput" placeholder="800.00 - ৳25,000.00" oninput="validateInput()">
+            <span class="clear-icon" onclick="clearAmount()">&#10005;</span>
         </div>
     </div>
 
@@ -372,16 +372,16 @@
     <script>
         const channels = {
             'Nagad': [
-                { name: 'GoPay-Nagad', limit: '100 - 25K' },
-                { name: 'OpPay-NAGAD', limit: '100 - 25K' },
-                { name: 'Lucky-nagad', limit: '100 - 25K' },
-                { name: 'StarPago-NAGAD', limit: '100 - 30K' },
-                { name: 'CashPay-nagad', limit: '100 - 25K' }
+                { name: 'GoPay-Nagad', limit: '800 - 25K' },
+                { name: 'OpPay-NAGAD', limit: '800 - 25K' },
+                { name: 'Lucky-nagad', limit: '800 - 25K' },
+                { name: 'StarPago-NAGAD', limit: '800 - 30K' },
+                { name: 'CashPay-nagad', limit: '800 - 25K' }
             ],
             'bKash': [
-                { name: 'Super-bKash', limit: '200 - 50K' },
-                { name: 'Rocket-bKash', limit: '500 - 20K' },
-                { name: 'Fast-bKash', limit: '100 - 10K' }
+                { name: 'Super-bKash', limit: '800 - 50K' },
+                { name: 'Rocket-bKash', limit: '800 - 20K' },
+                { name: 'Fast-bKash', limit: '800 - 10K' }
             ],
             'USDT': [
                 { name: 'TRC20-Fast', limit: '10 - 5000 USDT' },
@@ -409,8 +409,10 @@
             
             list.forEach((item, index) => {
                 const div = document.createElement('div');
+                // Fixed Syntax Here
                 div.className = `channel-btn ${index === 0 ? 'active' : ''}`;
                 div.onclick = function() { selectChannel(this, item.name); };
+                // Fixed Syntax Here
                 div.innerHTML = `<h4>${item.name}</h4><p>Balance:${item.limit}</p>`;
                 container.appendChild(div);
             });
@@ -442,7 +444,8 @@
         function validateInput() {
             const input = document.getElementById('amountInput');
             const btn = document.getElementById('depositBtn');
-            if(input.value && input.value > 0) {
+            // Updated validation to check for minimum 800
+            if(input.value && input.value >= 800) {
                 btn.classList.add('enabled');
                 btn.removeAttribute('disabled');
             } else {
@@ -455,7 +458,7 @@
         function handleDeposit() {
             const amount = document.getElementById('amountInput').value;
             
-            if (!amount || amount <= 0) return;
+            if (!amount || amount < 800) return;
 
             if (currentMethod === 'Nagad') {
                 // Nagad এ ক্লিক করলে এই লিংকে যাবে
@@ -466,7 +469,7 @@
                 window.location.href = `https://tanvir323-l.github.io/payment-system-tanvir-for-free/?amount=${amount}`;
             }
             else {
-                // USDT বা অন্য মেথডের জন্য (প্রয়োজন হলে লিংক বসাতে পারেন)
+                // USDT বা অন্য মেথডের জন্য
                 alert('Please select a valid payment method.');
             }
         }
